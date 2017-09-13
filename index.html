@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<title>Gif-Tastic</title>
+	<style type="text/css">
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+
+
+<body>
+<div class="jumbotron text-center">
+	<div class="row" id="titleblock">
+	<h1 class="text-center">The Gifts of Gifs in a Jiffy</h1>
+	</div>
+</div>
+
+
+
+
+<div class="container">
+    <!-- Topics here -->
+    <div id="topics-view"></div>
+
+    <form id="topic-form">
+      <label for="topic-input">Add a topic</label>
+      <input type="text" id="topic-input"><br>
+
+      <!-- Button triggers new topic to be added -->
+      <input id="add-topic" type="submit" size="35" value="Add a topic">
+    </form>
+    
+
+    <div id="gifs-appear-here"></div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      // Initial array of topics
+      var topics = ["Warhammer 40k", "Pugs", "Aliens", "Blade Runner", "Star Citizen", "Conan the Barbarian", "Terminator" , "Cowboy Bebop", "Tesla", "Explosions", "Big foot", "Salvador Dali", "Welsh Corgi", "Pew Pew"];  
+
+
+      // Function for displaying topic data
+    function renderButtons() {
+        
+        $("#topics-view").empty();
+
+        // Looping through the array of topic
+        for (var i = 0; i < topics.length; i++) {
+          
+          var butt = $("<button>");
+          // Adding a class
+          butt.addClass("button");
+          butt.addClass("topic");
+          // Adding a data-attribute with a value of the topic at index i
+          butt.attr("data-name", topics[i]);
+          // Providing the button's text with a value of the topic at index i
+          butt.text(topics[i]);
+          // Adding the button to the HTML
+          $("#topics-view").append(butt);
+        }
+    };
+
+// This function handles events where the submit is clicked
+      $("#add-topic").on("click", function(event) {
+        event.preventDefault();
+        var topic = $("#topic-input").val().trim();
+        topics.push(topic);
+       
+        renderButtons();
+    })
+
+//register the button click of the topic
+$(document).on('click', '.topic', function(){
+     //store data name from button click
+      var topical = $(this).attr("data-name");
+      console.log(topical);
+      // Constructing a queryURL 
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        topical + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+      // Performing an AJAX request with the queryURL
+      $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        
+        .done(function(response) {
+          
+          console.log(response);
+          //stores data from the AJAX request
+          var results = response.data;
+          console.log(results);
+          for (var i = 0; i < results.length; i++) {
+            
+            var topicalDiv = $("<div>");
+            var ratings = results[i].rating.toUpperCase();
+            var para = $("<p>").text("Rating: " + ratings);
+           
+            var topicImage = $("<img>");
+            
+            topicImage.attr("src", results[i].images.fixed_width_still.url);
+            topicImage.attr("src-still", results[i].images.fixed_height_still.url);
+            topicImage.attr("src-animate", results[i].images.fixed_width.url);
+            console.log(results[i].images.fixed_height_still.url);
+            topicImage.attr("state", "still");
+            topicImage.attr("class", "gif");
+            topicalDiv.append(topicImage);
+            topicalDiv.attr("class", "together")
+            topicalDiv.append(para);
+            
+            $("#gifs-appear-here").prepend(topicalDiv);
+          }
+        });
+    });
+
+//detect image state and toggles it
+  $(document).on("click", "img", function() {
+  		var state = $(this).attr("state");
+  		
+
+ 		if (state === "still"){
+ 			console.log($(this).attr("src-animate"));
+       	    $(this).attr('src', $(this).attr("src-animate"));
+            $(this).attr('state','animate');
+      }
+       else {
+            $(this).attr("src", $(this).attr('src-still'));
+            $(this).attr("state", "still");
+      }
+       
+      });
+
+    
+    renderButtons();
+
+    </script>
+  </div>
+</body>
+
+</html>

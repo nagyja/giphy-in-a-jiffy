@@ -1,0 +1,84 @@
+html{
+	background: url(../images/light_honeycomb_@2X.png) !important;
+}
+
+body{
+	background-color: transparent;
+}
+
+.navbar {
+background-color: #ffffff;
+position: fixed;
+width: 96.5%;
+bottom: 0px;
+
+}
+
+.navbar-header{
+    width:19%;
+    margin-left: 0;
+}
+
+button, #add-topic{
+	border: 2px solid;
+    border-radius: 10px;
+	font-size: 25px;
+}
+label{ 
+	font-size: 20px;
+}
+
+p { border-radius: 0 0 10px 10px;
+	font-size: 25px;
+	background-color: black;
+	color: white;
+	max-width: 290px;
+	margin-top: 0px;
+	padding-top: 0px;
+	padding-left: 10px;
+	
+}
+
+img {
+	width: 300px;
+	border-radius: 10px 10px 0 0;
+
+}
+
+.together {
+	width: 300px;
+	float: left;
+	position: relative;
+	margin-right: 10px;
+	padding-bottom:20px;
+}
+
+h1{
+	text-align: center;
+	vertical-align: center !important;
+	font-size: 30px;
+	color:white;
+	width:96.5%;
+	background-color: #666666;
+	margin-bottom: 0px;
+	padding:30px;
+	border-style: solid;
+    border-width: 0px 0px 8px 0px;
+    border-color: #4aaaa5;
+
+}
+
+#copyr{
+	text-align: center;
+	vertical-align: center !important;
+	font-size: 10px;
+	color:#4aaaa5;
+	width:94.5%;
+	background-color: #666666;
+	margin-bottom: 0px;
+	padding:20px;
+	border-style: solid;
+    border-width: 8px 0px 0px 0px;
+    border-color: #4aaaa5;
+}
+
